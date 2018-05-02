@@ -10,4 +10,6 @@ class Points{
 
     __host__ __device__ __forceinline__ float2 get_point(int idx) const;
 
+    __host__ print_point(int idx) const;
+
 };
