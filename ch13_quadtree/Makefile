@@ -20,4 +20,4 @@ bounding_box_test : bounding_box_test.cu ./build/bounding_box.o bounding_box.cuh
 	nvcc $(FLAGS) -o bounding_box_test bounding_box_test.cu ./build/bounding_box.o
 
 ./build/bounding_box.o : bounding_box.cu
-	nvcc $(FLAGS) -c -o bounding_box.o bounding_box.cu 
+	nvcc $(FLAGS) -c -o ./build/bounding_box.o bounding_box.cu 
