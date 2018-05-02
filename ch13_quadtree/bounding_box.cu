@@ -1,4 +1,3 @@
-#pragma once
 #include "bounding_box.cuh"
 __host__ __device__ BoundingBox::BoundingBox(){
     m_p_min = make_float2(0.0f, 0.0f);

@@ -1,3 +1,4 @@
+#pragma once
 class BoundingBox{
     float2 m_p_min;
     float2 m_p_max;
