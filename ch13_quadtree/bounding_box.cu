@@ -18,7 +18,7 @@ __host__ __device__ bool BoundingBox::contains(float2& p) const{
     return p.x >= m_p_min.x && p.y >= m_p_min.y && p.x <= m_p_max.x && p.y <= m_p_max.y;
 }
 
-__host__ __device__ void BoundingBox::set(float min_x, float min_y, float max_x, float_max_y){
+__host__ __device__ void BoundingBox::set(float min_x, float min_y, float max_x, float max_y){
     m_p_min.x = min_x;
     m_p_min.y = min_y;
     m_p_max.x = max_x;
