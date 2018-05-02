@@ -10,5 +10,5 @@ __host__ __device__ __forceinline__ float2 Points::get_point(int idx) const{
 
  __host__ void Points::print_point(int idx) const{
    float2 p = get_point(idx);
-   std::cout << "x: " <<  p.x << " y:" << p.y;
+   std::cout << "x: " <<  p.x << " y:" << p.y << std::endl;
  }
