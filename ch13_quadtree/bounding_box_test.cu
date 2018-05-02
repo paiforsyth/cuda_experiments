@@ -1,4 +1,5 @@
 #include <iostream>
+#include "bounding_box.cuh"
 int main(){
     BoundingBox box;        
     p1 = make_float2(0.5f,0.5f);
