@@ -8,10 +8,10 @@ __host__ __device__ void BoundingBox::compute_center(float2 &center) const{
     center.x = (m_p_min.x + m_p_max.x)/2;
     center.y = (m_p_min.y + m_p_max.y )/2;    
 }
-__host__ __device__ float2& BoundingBox::get_max() const{
+__host__ __device__ const  float2& BoundingBox::get_max() const{
         return m_p_max;    
 }
-__host__ __device__ float2& BoundingBox::get_min() const{
+__host__ __device__ const float2& BoundingBox::get_min() const{
     return m_p_min;    
 }
 __host__ __device__ bool BoundingBox::contains(float2& p) const{
