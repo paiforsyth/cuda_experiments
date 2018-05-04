@@ -273,7 +273,7 @@ int main(int argc, char **argv){
     cudaMemcpy(host_nodes,&nodes, max_nodes*sizeof(QuadTreeNode) , cudaMemcpyDeviceToHost);
 
     //copy the bools
-    cudaMemcpy(host_active_nodes, &device_active_nodes, sizeof(bool)*max_nodes, cudaMemcpyDeviceToHost):
+    cudaMemcpy(host_active_nodes, &device_active_nodes, sizeof(bool)*max_nodes, cudaMemcpyDeviceToHost);
 
     
 
