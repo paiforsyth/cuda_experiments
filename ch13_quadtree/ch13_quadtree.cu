@@ -10,6 +10,7 @@
 #include <cstdlib>
 #include <iostream>
 #include <assert.h>
+#include <stdio.h>
 #define SECTION_SIZE 512
 __global__ void ch13_quadtree_kernel(real* X, real* Y, int inputsize){
 }
@@ -130,7 +131,8 @@ __device__ void prepare_children(QuadTreeNode* children, QuadTreeNode& node, con
 
 __global__ void build_quad_tree_kernel(QuadTreeNode* nodes, Points* points, Parameters params,bool* active_nodes  ){
     __shared__ int smem[8];
-
+    printf("Hello from block %d, thread %d\n.  The current depth is %d and the number of nodes at this depth is %d ", blockIdx.x, threadIdx.x, params.depth, params.num_nodes_at_level );
+    cudaDeviceSynchronize();
     //the current node
     QuadTreeNode& node = nodes[blockIdx.x];
     node.set_id(node.id() + blockIdx.x);
