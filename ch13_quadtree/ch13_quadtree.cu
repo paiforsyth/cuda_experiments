@@ -94,7 +94,7 @@ __device__ void reorder_points(Points& out_points, const Points& in_points, int*
     __syncthreads();
 }
 
-__device__ void prepare_children(QuadTreeNode* children, QuadTreeNode& node, const BoundingBox& bbox, int* smem, active_nodes){
+__device__ void prepare_children(QuadTreeNode* children, QuadTreeNode& node, const BoundingBox& bbox, int* smem, bool* active_nodes){
     //int child_offset = 4*node.id();  
     int child_offset = node.id();//I added this, since the above seemed to be wrong
     children[child_offset+0].set_id(4*node.id()+0);
@@ -128,7 +128,7 @@ __device__ void prepare_children(QuadTreeNode* children, QuadTreeNode& node, con
 }
 
 
-__global__ void build_quad_tree_kernel(QuadTreeNode* nodes, Points* points, Parameters params, active_nodes  ){
+__global__ void build_quad_tree_kernel(QuadTreeNode* nodes, Points* points, Parameters params,bool* active_nodes  ){
     __shared__ int smem[8];
 
     //the current node
