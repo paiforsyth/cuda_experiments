@@ -1,6 +1,6 @@
 #pragma once
 #include "bounding_box.cuh"
-
+#include "points.cuh"
 class QuadTreeNode {
     int m_id; //identifier of the node
     int m_begin, m_end; //range of points for the node
