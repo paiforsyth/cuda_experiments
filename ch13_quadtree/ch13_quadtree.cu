@@ -111,7 +111,7 @@ __device__ void prepare_children(QuadTreeNode* children, QuadTreeNode& node, con
     children[child_offset+3].set_bounding_box(center.x, pmin.y, pmax.x, center.y ); //bottom right
 
     //set the point ranges for the children
-    children[child_offset + 0].set_range(node.points_begin(0), smem[4 + 0]);
+    children[child_offset + 0].set_range(node.points_begin(), smem[4 + 0]);
     children[child_offset + 1].set_range(smem[4 + 0], smem[4 + 1 ]);
     children[child_offset + 2].set_range(smem[4 + 1], smem[4 + 2 ]);
     children[child_offset + 3].set_range(smem[4 + 2], smem[4 + 3 ]);
