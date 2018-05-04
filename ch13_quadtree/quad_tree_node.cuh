@@ -10,7 +10,7 @@ class QuadTreeNode {
 
     __host__ __device__ int id() const;
 
-    __host__ __device__ voice set_id(int new_id);
+    __host__ __device__ void set_id(int new_id);
 
     __host__ __device__ __forceinline__ const BoundingBox& bounding_box() const;
 
