@@ -16,7 +16,7 @@ __host__ __device__  float2 Points::get_point(int idx) const{
    float* host_my;
    host_my= (float*)  malloc(sizeof(float)*(idx+1) );
    cudaMemcpy(host_my, m_y,sizeof(float)*(idx+1), cudaMemcpyDeviceToHost);
-   std::cout << "x: " <<  host_mx[idx] << " y:" << host_my_[idx] << std::endl;
+   std::cout << "x: " <<  host_mx[idx] << " y:" << host_my[idx] << std::endl;
  }
  __host__ __device__  void Points::set_point(int idx, const float2& p){
     m_x[idx] = p.x;
