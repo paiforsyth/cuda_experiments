@@ -131,7 +131,7 @@ __device__ void prepare_children(QuadTreeNode* children, QuadTreeNode& node, con
 
 __global__ void build_quad_tree_kernel(QuadTreeNode* nodes, Points* points, Parameters params,bool* active_nodes  ){
     __shared__ int smem[8];
-    printf("Hello from block %d, thread %d\n.  The current depth is %d and the number of nodes at this depth is %d ", blockIdx.x, threadIdx.x, params.depth, params.num_nodes_at_level );
+    printf("Hello from block %d, thread %d\n.  The current depth is %d and the number of nodes at this depth is %d ", blockIdx.x, threadIdx.x, params.depth, params.num_nodes_at_this_level );
     cudaDeviceSynchronize();
     //the current node
     QuadTreeNode& node = nodes[blockIdx.x];
