@@ -280,7 +280,7 @@ int main(int argc, char **argv){
     for(int i=0; i<max_nodes; ++i)
         if(host_active_nodes[i]){
             std::cout<< "Printing Node number: "<< i << std::endl;
-            host_nodes[i].list_points(points);
+            host_nodes[i].list_points(points[0]);
         }
     //free memory
     cudaFree(nodes);
