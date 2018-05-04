@@ -28,7 +28,7 @@ __device__ bool check_num_points_and_depth(QuadTreeNode& node, Points* points, i
         if (params.point_selector == 1){
             int it = node.points_begin();
             int end=node.points_end();
-            for (it += threadIdx.x; it < end; it+=Blockdim.x)
+            for (it += threadIdx.x; it < end; it+=blockDim.x)
                 if (it< end)
                     points[0].set_point(it, points[1].get_point(it));
         }
