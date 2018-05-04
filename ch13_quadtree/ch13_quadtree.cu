@@ -141,7 +141,7 @@ __global__ void build_quad_tree_kernel(QuadTreeNode* nodes, Points* points, Para
     Points& out_points = points[(params.point_selector +1) %2];
 
     //count points in each child
-    count_points_in_children(in_pointsl, smem, range_begin, range_endm cebter);
+    count_points_in_children(in_points, smem, range_begin, range_end, center);
     //compute reordering offset for each quadrant
     scan_for_offsets(node.points_begin(), smem);
     
