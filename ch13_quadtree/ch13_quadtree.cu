@@ -172,7 +172,7 @@ class RNG{
         }
 
     __host__ __device__
-    float operator()() const
+    float operator()() 
         {
             dex+=1;
             thrust::default_random_engine generator;
