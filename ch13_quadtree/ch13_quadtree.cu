@@ -102,10 +102,10 @@ __device__ void prepare_children(QuadTreeNode* children, QuadTreeNode& node, con
     children[child_offset+2].set_id(4*node.id()+8);
     children[child_offset+3].set_id(4*node.id()+12);
 
-    active_nodes[child_offset+0]=true
-    active_nodes[child_offset+1]=true
-    active_nodes[child_offset+2]=true
-    active_nodes[child_offset+3]=true
+    active_nodes[child_offset+0]=true;
+    active_nodes[child_offset+1]=true;
+    active_nodes[child_offset+2]=true;
+    active_nodes[child_offset+3]=true;
 
 
     //points in bounding box:
