@@ -5,6 +5,7 @@
 #include "parameters.cuh"
 #include <thrust/iterator/zip_iterator.h>
 #include <thrust/device_vector.h>
+#include <thrust/random.h>
 #include <random>
 #include <cstdlib>
 
