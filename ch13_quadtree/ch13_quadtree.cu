@@ -174,7 +174,7 @@ class RNG{
     __host__ __device__
     float operator()() const
         {
-            dex++;
+            dex+=1;
             thrust::default_random_engine generator;
             thrust::uniform_real_distribution<float> distribution(-1.0,1.0);
             generator.discard(dex);
