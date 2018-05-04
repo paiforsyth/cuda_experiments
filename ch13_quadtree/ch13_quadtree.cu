@@ -182,12 +182,15 @@ class RNG_functor{
 };
 
 int main(int argc, char **argv){
-    std::cout << "recieved" << argc << "arguments"<<std::endl;
-    assert(argc ==3);
+    std::cout << "Recieved " << argc << " arguments."<<std::endl;
+    assert(argc == 4);
     //load paramters from command line
-    const int num_points = atoi(argv[0]);
-    const int max_depth = atoi(argv[1]);   
-    const int min_points_per_node = atoi(argv[2]);
+    const int num_points = atoi(argv[1]);
+    const int max_depth = atoi(argv[2]);   
+    const int min_points_per_node = atoi(argv[3]);
+    std::cout << "Number of points is: "  << num_points << std::endl;
+    std::cout << "Max depth is: "  << max_depth << std::endl;
+    std::cout << "Min points per node is "  << min_points_per_node << std::endl;
     
 
     //allocate memory for points
