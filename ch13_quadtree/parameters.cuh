@@ -1,6 +1,6 @@
 class Parameters {
     public:
-    int point_selectior;
+    int point_selector;
 
     int num_nodes_at_this_level;
     
