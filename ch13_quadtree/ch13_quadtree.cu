@@ -94,12 +94,19 @@ __device__ void reorder_points(Points& out_points, const Points& in_points, int*
     __syncthreads();
 }
 
-__device__ void prepare_children(QuadTreeNode* children, QuadTreeNode& node, const BoundingBox& bbox, int* smem){
-    int child_offset = 4*node.id();
+__device__ void prepare_children(QuadTreeNode* children, QuadTreeNode& node, const BoundingBox& bbox, int* smem, active_nodes){
+    //int child_offset = 4*node.id();  
+    int child_offset = node.id();//I added this, since the above seemed to be wrong
     children[child_offset+0].set_id(4*node.id()+0);
     children[child_offset+1].set_id(4*node.id()+4);
     children[child_offset+2].set_id(4*node.id()+8);
     children[child_offset+3].set_id(4*node.id()+12);
+
+    active_nodes[child_offset+0]=true
+    active_nodes[child_offset+1]=true
+    active_nodes[child_offset+2]=true
+    active_nodes[child_offset+3]=true
+
 
     //points in bounding box:
     const float2& pmin = bbox.get_min();
@@ -121,7 +128,7 @@ __device__ void prepare_children(QuadTreeNode* children, QuadTreeNode& node, con
 }
 
 
-__global__ void build_quad_tree_kernel(QuadTreeNode* nodes, Points* points, Parameters params  ){
+__global__ void build_quad_tree_kernel(QuadTreeNode* nodes, Points* points, Parameters params, active_nodes  ){
     __shared__ int smem[8];
 
     //the current node
@@ -154,10 +161,10 @@ __global__ void build_quad_tree_kernel(QuadTreeNode* nodes, Points* points, Para
     
     if (threadIdx.x == blockDim.x-1){
         QuadTreeNode* children = &nodes[params.num_nodes_at_this_level];
-
-        prepare_children(children, node, bbox, smem);
+        bool* child_active_nodes = &active_nodes[params.num_nodes_at_this_level];
+        prepare_children(children, node, bbox, smem,child_active_nodes);
         //launch child kernels
-        build_quad_tree_kernel<<<4,blockDim.x, 8 * sizeof(int)>>>(children, points, Parameters(params, true));
+        build_quad_tree_kernel<<<4,blockDim.x, 8 * sizeof(int)>>>(children, points, Parameters(params, true), child_active_nodes);
     }
 
 
@@ -213,7 +220,7 @@ int main(int argc, char **argv){
             */
     
 
-     // host Points object pointing to the key device_vectors
+     // host Points object whose uderlying data is the key  device_vectors
     Points points_init[2];
     points_init[0].set(thrust::raw_pointer_cast(&x_d0[0]),
                       thrust::raw_pointer_cast(&y_d0[0]) 
@@ -238,6 +245,15 @@ int main(int argc, char **argv){
     QuadTreeNode* nodes;
     cudaMalloc((void**) &nodes, max_nodes*sizeof(QuadTreeNode) );
     cudaMemcpy(nodes, &root, sizeof(QuadTreeNode), cudaMemcpyHostToDevice );
+
+    bool* host_active_nodes = new bool[max_nodes];
+    host_active_nodes[0]=true;
+    for (int i=1; i< max_nodes; i++)
+        host_active_nodes[i]=false;
+
+    bool* device_active_nodes;
+    cudaMalloc((void**) &device_active_nodes, max_nodes*sizeof(bool),  );
+    cudaMemcpy(device_active_nodes, &host_active_nodes, sizeof(bool)*max_nodes, cudaMemcpyHostToDevice):
     
     //set reucsion limit for cuda dynamic parallelism to max_depth
     cudaDeviceSetLimit(cudaLimitDevRuntimeSyncDepth,max_depth);
@@ -246,9 +262,26 @@ int main(int argc, char **argv){
     Parameters params(max_depth, min_points_per_node);
     const int NUM_THREADS_PER_BLOCK=32;
     const size_t smem_size=8*sizeof(int);
-    build_quad_tree_kernel<<<1, NUM_THREADS_PER_BLOCK,smem_size>>>(nodes, points, params);
+    build_quad_tree_kernel<<<1, NUM_THREADS_PER_BLOCK,smem_size>>>(nodes, points, params, device_active_nodes);
 	gpuErrchk(cudaPeekAtLastError());
 
+
+    //inspect results
+    //copy the nodes
+    QuadTreeNode* host_nodes;
+    malloc((void**) &host_nodes, max_nodes * sizeof(QuadTreeNode) );
+    cudaMemcpy(host_nodes,&nodes, max_nodes*sizeof(QuadTreeNode) , cudaMemcpyDeviceToHost);
+
+    //copy the bools
+    cudaMemcpy(host_active_nodes, &device_active_nodes, sizeof(bool)*max_nodes, cudaMemcpyDeviceToHost):
+
+    
+
+    for(int i=0; i<max_nodes; ++i)
+        if(host_active_nodes[i]){
+            std::cout<< "Printing Node number: "<< i << std::endl;
+            host_nodes[i].list_points(points)
+        }
     //free memory
     cudaFree(nodes);
     cudaFree(points);

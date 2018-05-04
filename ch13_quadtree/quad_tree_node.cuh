@@ -25,6 +25,6 @@ class QuadTreeNode {
 
     __host__ __device__  void set_range(int begin, int end);
 
-    
+    __host__   void list_points(Points points);
 
 };
