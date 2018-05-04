@@ -92,7 +92,7 @@ __device__ void reorder_points(Points& out_points, const Points& in_points, int*
     __syncthreads();
 }
 
-__device__ prepare_children(QuadTreeNode* children, QuadTreeNode& node, const BoundingBox& bbox, int* smem){
+__device__ void prepare_children(QuadTreeNode* children, QuadTreeNode& node, const BoundingBox& bbox, int* smem){
     int child_offset = 4*node.id();
     children[child_offset+0].set_id(4*node.id()+0);
     children[child_offset+1].set_id(4*node.id()+4);
