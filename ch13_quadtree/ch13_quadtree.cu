@@ -176,8 +176,8 @@ int main(int argc, char **argv){
     thrust::device_vector<float> y_d1(num_points);
 
     //generate random points
-    std::default_random_engine generator;
-    std::uniform_real_distribution<float> distribution(-1.0,1.0);
+    thrust::default_random_engine generator;
+    thrust::uniform_real_distribution<float> distribution(-1.0,1.0);
     auto rng=[&](){return distribution(generator);};
     thrust::generate(
             thrust::make_zip_iterator(thrust::make_tuple(x_d0.begin(),y_d0.begin())),
