@@ -155,7 +155,7 @@ __global__ void build_quad_tree_kernel(QuadTreeNode* nodes, Points* points, Para
 
         prepare_children(children, node, bbox, smem);
         //launch child kernels
-        build_quad_tree_kernel<<4,blockDim.x, 8 * sizeof(int)>>(children, points, Parameters(params, true));
+        build_quad_tree_kernel<<<4,blockDim.x, 8 * sizeof(int)>>>(children, points, Parameters(params, true));
     }
 
 
