@@ -163,27 +163,23 @@ __global__ void build_quad_tree_kernel(QuadTreeNode* nodes, Points* points, Para
 
 }
 
-class RNG{
-    int dex;
+class RNG_functor{
+    int ip
     public:
-    __host__ __device__
-        RNG(){  
-            dex=1;
+        RNG(int init_p){  
+            ip = init_p; 
         }
 
     __host__ __device__
-    float operator()() 
+    float operator(int dex) const() 
         {
-            dex+=1;
             thrust::default_random_engine generator;
-            thrust::uniform_real_distribution<float> distribution(-1.0,1.0);
-            generator.discard(dex);
+            thrust::uniform_real_distribution<float> distribution(-1.0f,1.0f);
+            generator.discard(ip+dex);
             return distribution(generator);
         }
-
-
-
 };
+
 int main(int argc, char **argv){
     //load paramters from command line
     const int num_points = atoi(argv[0]);
@@ -198,14 +194,19 @@ int main(int argc, char **argv){
     thrust::device_vector<float> y_d1(num_points);
 
     //generate random points
-    thrust::default_random_engine generator;
-    thrust::uniform_real_distribution<float> distribution(-1.0,1.0);
-RNG rng;
-    thrust::generate(
+    thrust::counting_iterator<int> count1_begin(0);
+    thrust::counting_iterator<int> count2_begin(0);
+    thrust::transform(count1_begin, count1_begin+num_points,x_d0.begin(),RNG_functor(0) );
+    thrust::transform(count2_begin, count2_begin+num_points,y_d0.begin(),RNG_functor(42) );
+
+    /*thrust::generate(
             thrust::make_zip_iterator(thrust::make_tuple(x_d0.begin(),y_d0.begin())),
             thrust::make_zip_iterator(thrust::make_tuple(x_d0.end(), y_d0.end())),
             rng
             );
+            */
+    
+
      // host Points object pointing to the key device_vectors
     Points points_init[2];
     points_init[0].set(thrust::raw_pointer_cast(&x_d0[0]),
