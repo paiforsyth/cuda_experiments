@@ -185,7 +185,7 @@ int main(int argc, char **argv){
             rng
             );
      // host Points object pointing to the key device_vectors
-    Point points_init[2];
+    Points points_init[2];
     points_init[0].set(thrust::raw_pointer_cast(&x_d0[0])
                       thrust::raw_pointer_cast(&y_d0[0]) 
             );
