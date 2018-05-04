@@ -162,7 +162,7 @@ __global__ void build_quad_tree_kernel(QuadTreeNode* nodes, Points* points, Para
 
 }
 
-void main(int argc, char **argv){
+int main(int argc, char **argv){
     //load paramters from command line
     const int num_points = atoi(argv[0]);
     const int max_depth = atoi(argv[1]);   
@@ -178,7 +178,7 @@ void main(int argc, char **argv){
     //generate random points
     std::default_random_engine generator;
     std::uniform_real_distribution<float> distribution(-1.0,1.0);
-    rng=[&](){return distribution(generator);}
+    auto rng=[&](){return distribution(generator);}
     thrust::generate(
             thrust::make_zip_iterator(thrust::make_tuple(x_d0.begin(),y_d0.begin())),
             thrust::make_zip_iterator(thrust::make_tuple(x_d0.end(), y_d0.end())),
