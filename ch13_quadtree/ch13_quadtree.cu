@@ -182,7 +182,7 @@ class RNG_functor{
 };
 
 int main(int argc, char **argv){
-    std::cout << "recieved" << argc << "arguments";
+    std::cout << "recieved" << argc << "arguments"<<std::endl;
     assert(argc ==3);
     //load paramters from command line
     const int num_points = atoi(argv[0]);
