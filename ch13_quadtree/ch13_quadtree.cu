@@ -201,7 +201,7 @@ int main(int argc, char **argv){
     //count the maximum number of nodes that could be needed
     int max_nodes = 0;
     for (int i=0, num_nodes_at_level=1; i<max_depth;++i, num_nodes_at_level*=4 )
-        max_nodes += num_nodes_at_level
+        max_nodes += num_nodes_at_level;
 
     //alocate memory to store the tree
     QuadTreeNode root;
