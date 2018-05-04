@@ -102,6 +102,9 @@ __device__ void prepare_children(QuadTreeNode* children, QuadTreeNode& node, con
     //points in bounding box:
     const float2& pmin = bbox.get_min();
     const float2& pmax = bbox.get_max();
+    const BoundingBox& bbox = node.bounding_box();
+    float2 center;
+    bbox.compute_center(center); //does this work, given that bbox is const?
 
     children[child_offset+0].set_bounding_box(pmin.x, center.y, center.x, pmax.y ) //top left
     children[child_offset+1].set_bounding_box(center.x, center.y, pmax.x, pmax.y ) //top right
@@ -145,7 +148,7 @@ __global__ void build_quad_tree_kernel(QuadTreeNode* nodes, Points* points, Para
     
 
     //reorder points (in other point buffer)
-    reoder_points(out_points, in_points, smem, range_begin, range_end, center);
+    reorder_points(out_points, in_points, smem, range_begin, range_end, center);
 
     
     if (threadIdx.x == blockDim.x-1){
