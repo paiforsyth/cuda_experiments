@@ -11,28 +11,28 @@ __host__ __device__ void QuadTreeNode::set_id(int new_id){
 }
 
 
-__host__ __device__ __forceinline__ const BoundingBox& QuadTreeNode::bounding_box() const{
+__host__ __device__  const BoundingBox& QuadTreeNode::bounding_box() const{
     return m_bounding_box;
 }
 
-__host__ __device__ __forceinline__ void QuadTreeNode::set_bounding_box(float minx, float miny, float maxx, float maxy){
+__host__ __device__  void QuadTreeNode::set_bounding_box(float minx, float miny, float maxx, float maxy){
     m_bounding_box.set(minx, miny, maxx, maxy);
 }
 
 
-__host__ __device__  __forceinline__ int QuadTreeNode::num_points() const{
+__host__ __device__   int QuadTreeNode::num_points() const{
     return m_end - m_begin;
 }
 
-__host__ __device__ __forceinline__ int QuadTreeNode::points_begin() const{
+__host__ __device__  int QuadTreeNode::points_begin() const{
     return m_begin;
 }
 
-__host__ __device__ __forceinline__ int QuadTreeNode::points_end() const{
+__host__ __device__  int QuadTreeNode::points_end() const{
     return m_end;
 }
 
-__host__ __device__ __forceinline__ void QuadTreeNode::set_range(int begin, int end){
+__host__ __device__  void QuadTreeNode::set_range(int begin, int end){
     m_begin = begin;
     m_end = end;
 }
