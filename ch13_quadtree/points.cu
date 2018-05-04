@@ -11,10 +11,10 @@ __host__ __device__  float2 Points::get_point(int idx) const{
  __host__ void Points::print_point_d_2_h(int idx) const{
      //hack
    float* host_mx;
-   host_mx=malloc(sizeof(float)*(idx+1) )
+   host_mx= (float*)  malloc(sizeof(float)*(idx+1) );
    cudaMemcpy(host_mx, m_x,sizeof(float)*(idx+1), cudaMemcpyDeviceToHost);
    float* host_my;
-   host_my=malloc(sizeof(float)*(idx+1) )
+   host_my= (float*)  malloc(sizeof(float)*(idx+1) );
    cudaMemcpy(host_my, m_y,sizeof(float)*(idx+1), cudaMemcpyDeviceToHost);
    std::cout << "x: " <<  host_mx[idx] << " y:" << host_my_[idx] << std::endl;
  }
