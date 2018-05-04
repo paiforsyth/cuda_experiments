@@ -5,7 +5,7 @@ FLAGS = -std=c++14 -I~/Dropbox/src/
 
 
 
-ch13_quadtree : ch13_quadtree.cu ./build/points.o ./build/boundind_box.o  ./build/quad_tree_node.o   ./build/parameters.o
+ch13_quadtree : ch13_quadtree.cu ./build/points.o ./build/bounding_box.o  ./build/quad_tree_node.o   ./build/parameters.o
 	nvcc $(FLAGS)  -o ch13_quadtree ch13_quadtree.cu ./build/points.o ./build/boundind_box.o  ./build/quad_tree_node.o  ./build/parameters.o
 
 points_test : points_test.cu ./build/points.o points.cuh
