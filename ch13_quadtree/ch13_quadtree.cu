@@ -178,7 +178,7 @@ int main(int argc, char **argv){
     //generate random points
     std::default_random_engine generator;
     std::uniform_real_distribution<float> distribution(-1.0,1.0);
-    auto rng=[&](){return distribution(generator);}
+    auto rng=[&](){return distribution(generator);};
     thrust::generate(
             thrust::make_zip_iterator(thrust::make_tuple(x_d0.begin(),y_d0.begin())),
             thrust::make_zip_iterator(thrust::make_tuple(x_d0.end(), y_d0.end())),
