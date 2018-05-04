@@ -105,10 +105,10 @@ __device__ void prepare_children(QuadTreeNode* children, QuadTreeNode& node, con
     float2 center;
     bbox.compute_center(center); //does this work, given that bbox is const?
 
-    children[child_offset+0].set_bounding_box(pmin.x, center.y, center.x, pmax.y ) //top left
-    children[child_offset+1].set_bounding_box(center.x, center.y, pmax.x, pmax.y ) //top right
-    children[child_offset+2].set_bounding_box(pmin.x, pmin.y, center.x, center.y ) //bottom left
-    children[child_offset+3].set_bounding_box(center.x, pmin.y, pmax.x, center.y ) //bottom right
+    children[child_offset+0].set_bounding_box(pmin.x, center.y, center.x, pmax.y ); //top left
+    children[child_offset+1].set_bounding_box(center.x, center.y, pmax.x, pmax.y ); //top right
+    children[child_offset+2].set_bounding_box(pmin.x, pmin.y, center.x, center.y ); //bottom left
+    children[child_offset+3].set_bounding_box(center.x, pmin.y, pmax.x, center.y ); //bottom right
 
     //set the point ranges for the children
     children[child_offset + 0].set_range(node.points_begin(0), smem[4 + 0]);
