@@ -12,10 +12,8 @@ class Points{
 
     __host__ void print_point(int idx) const;
 
-    __host__ __device__ __forceinline__ float2 set_point(int idx, const float2& p){
-    m_x[idx] = p.x;
-    m_y[idx] = p.y;
+    __host__ __device__ __forceinline__ void set_point(int idx, const float2& p);
+    __host__ __device__ __forceinline__ void set(float* x , float* y); 
         
-}
 
 };
