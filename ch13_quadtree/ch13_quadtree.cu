@@ -269,7 +269,7 @@ int main(int argc, char **argv){
     //inspect results
     //copy the nodes
     QuadTreeNode* host_nodes;
-    malloc((void**) &host_nodes, max_nodes * sizeof(QuadTreeNode) );
+    host_nodes = (QuadTreeNode*) malloc( max_nodes * sizeof(QuadTreeNode) );
     cudaMemcpy(host_nodes,&nodes, max_nodes*sizeof(QuadTreeNode) , cudaMemcpyDeviceToHost);
 
     //copy the bools
