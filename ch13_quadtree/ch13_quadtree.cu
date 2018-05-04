@@ -200,7 +200,7 @@ int main(int argc, char **argv){
     //generate random points
     thrust::default_random_engine generator;
     thrust::uniform_real_distribution<float> distribution(-1.0,1.0);
-//RNG rng;
+RNG rng;
     thrust::generate(
             thrust::make_zip_iterator(thrust::make_tuple(x_d0.begin(),y_d0.begin())),
             thrust::make_zip_iterator(thrust::make_tuple(x_d0.end(), y_d0.end())),
