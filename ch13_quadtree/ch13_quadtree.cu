@@ -252,7 +252,7 @@ int main(int argc, char **argv){
         host_active_nodes[i]=false;
 
     bool* device_active_nodes;
-    cudaMalloc((void**) &device_active_nodes, max_nodes*sizeof(bool),  );
+    cudaMalloc((void**) &device_active_nodes, max_nodes*sizeof(bool)  );
     cudaMemcpy(device_active_nodes, &host_active_nodes, sizeof(bool)*max_nodes, cudaMemcpyHostToDevice):
     
     //set reucsion limit for cuda dynamic parallelism to max_depth
