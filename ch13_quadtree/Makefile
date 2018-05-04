@@ -1,4 +1,4 @@
-FLAGS = -std=c++14 -I~/Dropbox/src/
+FLAGS = -std=c++14 -I~/Dropbox/src -arch=sm_35
 
 
 
