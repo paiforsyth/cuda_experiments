@@ -45,6 +45,6 @@ __host__ __device__  void QuadTreeNode::set_range(int begin, int end){
 __host__   void QuadTreeNode::list_points(Points points){
     std::cout << "The Node contains the points:"<<std::endl;
     for (int i = m_begin; i< m_end; ++i ) 
-        points.print_point(i);
+        points.print_point_d_2_h(i);
 
 }

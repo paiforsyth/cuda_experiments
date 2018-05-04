@@ -8,9 +8,13 @@ __host__ __device__  float2 Points::get_point(int idx) const{
     return make_float2(m_x[idx], m_y[idx]);
 }
 
- __host__ void Points::print_point(int idx) const{
-   float2 p = get_point(idx);
-   std::cout << "x: " <<  p.x << " y:" << p.y << std::endl;
+ __host__ void Points::print_point_d_2_h(int idx) const{
+     //hack
+   float* host_mx;
+   cudaMemcpy(host_mx, mx,sizeof(float)*(idx+1), cudaMemcpyDeviceToHost);
+   float* host_my;
+   cudaMemcpy(host_my, my,sizeof(float)*(idx+1), cudaMemcpyDeviceToHost);
+   std::cout << "x: " <<  host_mx[idx] << " y:" << host_my_[idx] << std::endl;
  }
  __host__ __device__  void Points::set_point(int idx, const float2& p){
     m_x[idx] = p.x;
