@@ -102,7 +102,6 @@ __device__ void prepare_children(QuadTreeNode* children, QuadTreeNode& node, con
     //points in bounding box:
     const float2& pmin = bbox.get_min();
     const float2& pmax = bbox.get_max();
-    const BoundingBox& bbox = node.bounding_box();
     float2 center;
     bbox.compute_center(center); //does this work, given that bbox is const?
 
