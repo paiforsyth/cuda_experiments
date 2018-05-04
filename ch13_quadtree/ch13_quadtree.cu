@@ -124,7 +124,7 @@ __global__ void build_quad_tree_kernel(QuadTreeNode* nodes, Points* points, Para
 
     //the current node
     QuadTreeNode& node = nodes[blockIdx.x];
-    node.set_idx(node.id() + blockIdx.x);
+    node.set_id(node.id() + blockIdx.x);
     int num_points = node.num_points();
 
     //check exit condition, moving points to first buffer as needed
