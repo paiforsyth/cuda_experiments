@@ -7,7 +7,7 @@ __host__ __device__ int QuadTreeNode::id() const{
 }
 
 __host__ __device__ void QuadTreeNode::set_id(int new_id){
-    mid= new_id;
+    m_id= new_id;
 }
 
 
