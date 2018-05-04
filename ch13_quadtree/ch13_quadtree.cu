@@ -166,7 +166,7 @@ __global__ void build_quad_tree_kernel(QuadTreeNode* nodes, Points* points, Para
 class RNG_functor{
     int ip;
     public:
-        RNG(int init_p){  
+        RNG_functor(int init_p){  
             ip = init_p; 
         }
 
