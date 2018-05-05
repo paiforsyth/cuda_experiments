@@ -165,7 +165,9 @@ __global__ void build_quad_tree_kernel(QuadTreeNode* nodes, Points* points, Para
     }
     //compute reordering offset for each quadrant
     scan_for_offsets(node.points_begin(), smem);
-    
+    if (threadIdx.x == 0){
+        printf("Depth: %d.  Num: %d.  offsets: (%d,%d,%d,%d) \n", params.depth, blockIdx.x, smem[4], smem[5], smem[6], smem[7] );
+    }
 
     //reorder points (in other point buffer)
     reorder_points(out_points, in_points, smem, range_begin, range_end, center);
