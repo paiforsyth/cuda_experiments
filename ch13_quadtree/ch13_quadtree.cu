@@ -133,14 +133,15 @@ __device__ void prepare_children(QuadTreeNode* children, QuadTreeNode& node, con
 }
 
 
-__global__ void build_quad_tree_kernel(QuadTreeNode* nodes, Points* points, Parameters params,bool* active_nodes  ){
-    //problem: we always start at the begining of nodes, even when we should start later
+__global__ void build_quad_tree_kernel(QuadTreeNode* nodes, Points* points, Parameters params,bool* active_nodes, int start_index  ){
+
+    //problem: we always start at the begining of nodes, even when we should start later.  fix: start index records where we should getting nodes
     //nodes represents nodes at this level
     __shared__ int smem[8];
     //idea: have only thread 0 display the point
     
     //the current node
-    QuadTreeNode& node = nodes[blockIdx.x]; 
+    QuadTreeNode& node = nodes[blockIdx.x+start_index]; 
      //node.set_id( blockIdx.x);
     int num_points = node.num_points();
     //printf("hello!");
@@ -185,7 +186,7 @@ __global__ void build_quad_tree_kernel(QuadTreeNode* nodes, Points* points, Para
         bool* child_active_nodes = &active_nodes[params.num_nodes_at_this_level ];
         prepare_children(children, node, bbox, smem,child_active_nodes);
         //launch child kernels
-        build_quad_tree_kernel<<<4,blockDim.x, 8 * sizeof(int)>>>(children, points, Parameters(params, true), child_active_nodes);
+        build_quad_tree_kernel<<<4,blockDim.x, 8 * sizeof(int)>>>(children, points, Parameters(params, true), child_active_nodes, node.id());
     }
 
 
@@ -307,7 +308,7 @@ int main(int argc, char **argv){
     const int NUM_THREADS_PER_BLOCK=32;
     const size_t smem_size=8*sizeof(int);
     std::cout << "Launching Kernel"<<std::endl;
-    build_quad_tree_kernel<<<1, NUM_THREADS_PER_BLOCK,smem_size>>>(nodes, points, params, device_active_nodes);
+    build_quad_tree_kernel<<<1, NUM_THREADS_PER_BLOCK,smem_size>>>(nodes, points, params, device_active_nodes,0);
 	gpuErrchk(cudaPeekAtLastError());
 
 
