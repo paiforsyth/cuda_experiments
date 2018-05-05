@@ -236,6 +236,7 @@ int main(int argc, char **argv){
      // host Points object whose uderlying data is the key  device_vectors
     cudaDeviceSynchronize();
     std::cout << "setting up points_init " << std::endl;
+    cudaDeviceSynchronize();
     Points points_init[2];
     points_init[0].set(thrust::raw_pointer_cast(&x_d0[0]),
                       thrust::raw_pointer_cast(&y_d0[0]) 
@@ -247,6 +248,7 @@ int main(int argc, char **argv){
     //allocate Points objects on the device, refering to the same underlying data as above
     cudaDeviceSynchronize();
     std::cout << "allocating points object on device " << std::endl;
+    cudaDeviceSynchronize();
     Points* points; 
     cudaMalloc( (void**) &points, 2*sizeof(Points) );
     cudaMemcpy(points, points_init, 2*sizeof(Points), cudaMemcpyHostToDevice);
@@ -259,6 +261,7 @@ int main(int argc, char **argv){
     //alocate memory to store the tree
     cudaDeviceSynchronize();
     std::cout << "allocating tree " << std::endl;
+    cudaDeviceSynchronize();
     QuadTreeNode root;
     root.set_range(0, num_points);
     QuadTreeNode* nodes;
@@ -266,6 +269,7 @@ int main(int argc, char **argv){
     cudaMemcpy(nodes, &root, sizeof(QuadTreeNode), cudaMemcpyHostToDevice );
 
 
+    cudaDeviceSynchronize();
     std::cout << "allocating host_active_nodes " << std::endl;
     cudaDeviceSynchronize();
     bool* host_active_nodes = new bool[max_nodes];
@@ -273,10 +277,12 @@ int main(int argc, char **argv){
     for (int i=1; i< max_nodes; i++)
         host_active_nodes[i]=false;
 
+    cudaDeviceSynchronize();
     std::cout << "allocating device active nodes " << std::endl;
     cudaDeviceSynchronize();
     bool* device_active_nodes;
     cudaMalloc((void**) &device_active_nodes, max_nodes*sizeof(bool)  );
+    cudaDeviceSynchronize();
     std::cout << "copying host active nodes to device active nodes " << std::endl;
     cudaDeviceSynchronize();
     cudaMemcpy(device_active_nodes, &host_active_nodes, sizeof(bool)*max_nodes, cudaMemcpyHostToDevice);
