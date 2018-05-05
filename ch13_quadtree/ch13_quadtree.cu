@@ -98,6 +98,7 @@ __device__ void reorder_points(Points& out_points, const Points& in_points, int*
 __device__ void prepare_children(QuadTreeNode* children, QuadTreeNode& node, const BoundingBox& bbox, int* smem, bool* active_nodes){
     //int child_offset = 4*node.id();  
     int child_offset = node.id();//I added this, since the above seemed to be wrong
+
     children[child_offset+0].set_id(4*node.id()+0);
     children[child_offset+1].set_id(4*node.id()+4);
     children[child_offset+2].set_id(4*node.id()+8);
@@ -174,8 +175,8 @@ __global__ void build_quad_tree_kernel(QuadTreeNode* nodes, Points* points, Para
 
     
     if (threadIdx.x == blockDim.x-1){
-        printf("Depth: %d.  Num: %d launching child kernels\n", params.depth, blockIdx.x);
-        QuadTreeNode* children = &nodes[params.num_nodes_at_this_level];
+        printf("Depth: %d.  Num: %d. Id: %d .launching child kernels\n", params.depth, blockIdx.x, node.id());
+        QuadTreeNode* children = &nodes[params.num_nodes_at_this_level]; //This actually gives a pointer to the start of ndoes at the next level, and not neccesarily the children of this node
         bool* child_active_nodes = &active_nodes[params.num_nodes_at_this_level];
         prepare_children(children, node, bbox, smem,child_active_nodes);
         //launch child kernels
