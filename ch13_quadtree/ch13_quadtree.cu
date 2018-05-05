@@ -137,11 +137,11 @@ __global__ void build_quad_tree_kernel(QuadTreeNode* nodes, Points* points, Para
     QuadTreeNode& node = nodes[blockIdx.x]; 
     node.set_id(node.id() + blockIdx.x);
     int num_points = node.num_points();
-    printf("hello!");
+    //printf("hello!");
     cudaDeviceSynchronize();
     if(threadIdx.x==0){
-        printf("yo");
-      //  printf("The current depth is %d.  The currently active node is %d.  The node is responsible for points in the range %d to %d",  params.depth, blockIdx.x, node.points_begin(), node.points_end()  );
+       // printf("yo");
+        printf("The current depth is %d.  The currently active node is %d.  The node is responsible for points in the range %d to %d",  params.depth, blockIdx.x, node.points_begin(), node.points_end()  );
     }
     cudaDeviceSynchronize();
 
