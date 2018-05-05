@@ -2,7 +2,7 @@
 #include "points.cuh"
 #include <iostream>
 
-__host__ __device__ QuadTreeNode::QuadTreeNode(): m_id(0), m_begin(0), m_end(0) {}
+__host__ __device__ QuadTreeNode::QuadTreeNode(): m_id(0), m_begin(0), m_end(0), m_bounding_box() {}
     
 __host__ __device__ int QuadTreeNode::id() const{
     return m_id;
