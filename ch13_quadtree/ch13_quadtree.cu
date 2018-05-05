@@ -160,7 +160,7 @@ __global__ void build_quad_tree_kernel(QuadTreeNode* nodes, Points* points, Para
 
     //count points in each child
     count_points_in_children(in_points, smem, range_begin, range_end, center);
-    if (threadIdx == 0){
+    if (threadIdx.x == 0){
         printf("Depth: %d.  Num: %d.  Points in children: (%d,%d,%d,%d) \n", params.depth, blockIdx.x, smem[0], smem[1], smem[2], smem[3] );
     }
     //compute reordering offset for each quadrant
