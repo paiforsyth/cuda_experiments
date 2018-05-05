@@ -169,7 +169,7 @@ __global__ void build_quad_tree_kernel(QuadTreeNode* nodes, Points* points, Para
 
     
     if (threadIdx.x == blockDim.x-1){
-        printf("Depth: %d.  Num: %d launching child kernels", params.depth, blockIdx.x);
+        printf("Depth: %d.  Num: %d launching child kernels\n", params.depth, blockIdx.x);
         QuadTreeNode* children = &nodes[params.num_nodes_at_this_level];
         bool* child_active_nodes = &active_nodes[params.num_nodes_at_this_level];
         prepare_children(children, node, bbox, smem,child_active_nodes);
