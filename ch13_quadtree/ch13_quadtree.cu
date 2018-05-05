@@ -139,8 +139,10 @@ __global__ void build_quad_tree_kernel(QuadTreeNode* nodes, Points* points, Para
     int num_points = node.num_points();
     printf("hello!");
     cudaDeviceSynchronize();
-    if(threadIdx.x==0)
-        printf("The current depth is %d.  The currently active node is %d.  The node is responsible for points in the range %d to %d",  params.depth, blockIdx.x, node.points_begin(), node.points_end()  );
+    if(threadIdx.x==0){
+        printf("yo");
+      //  printf("The current depth is %d.  The currently active node is %d.  The node is responsible for points in the range %d to %d",  params.depth, blockIdx.x, node.points_begin(), node.points_end()  );
+    }
     cudaDeviceSynchronize();
 
     //check exit condition, moving points to first buffer as needed
