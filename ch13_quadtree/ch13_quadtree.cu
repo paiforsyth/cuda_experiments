@@ -96,6 +96,9 @@ __device__ void reorder_points(Points& out_points, const Points& in_points, int*
 }
 
 __device__ void prepare_children(QuadTreeNode* children, QuadTreeNode& node, const BoundingBox& bbox, int* smem, bool* active_nodes){
+    //children holds the nodes at this level
+    //at level L there are 4^L nodes.  node i in level L-1 is parent of nodes [4*i,4*i+3] in the next levelo
+   //a  nodes's id is the index at which its children start in the array of all nodes in the next level 
     //int child_offset = 4*node.id();  
     int child_offset = node.id();//I added this, since the above seemed to be wrong
 
@@ -131,12 +134,14 @@ __device__ void prepare_children(QuadTreeNode* children, QuadTreeNode& node, con
 
 
 __global__ void build_quad_tree_kernel(QuadTreeNode* nodes, Points* points, Parameters params,bool* active_nodes  ){
+    //problem: we always start at the begining of nodes, even when we should start later
+    //nodes represents nodes at this level
     __shared__ int smem[8];
     //idea: have only thread 0 display the point
     
     //the current node
     QuadTreeNode& node = nodes[blockIdx.x]; 
-    node.set_id(node.id() + blockIdx.x);
+     //node.set_id( blockIdx.x);
     int num_points = node.num_points();
     //printf("hello!");
     cudaDeviceSynchronize();
@@ -176,8 +181,8 @@ __global__ void build_quad_tree_kernel(QuadTreeNode* nodes, Points* points, Para
     
     if (threadIdx.x == blockDim.x-1){
         printf("Depth: %d.  Num: %d. Id: %d .launching child kernels\n", params.depth, blockIdx.x, node.id());
-        QuadTreeNode* children = &nodes[params.num_nodes_at_this_level]; //This actually gives a pointer to the start of ndoes at the next level, and not neccesarily the children of this node
-        bool* child_active_nodes = &active_nodes[params.num_nodes_at_this_level];
+        QuadTreeNode* children = &nodes[params.num_nodes_at_this_level];//children should really be called next_level_nodes 
+        bool* child_active_nodes = &active_nodes[params.num_nodes_at_this_level ];
         prepare_children(children, node, bbox, smem,child_active_nodes);
         //launch child kernels
         build_quad_tree_kernel<<<4,blockDim.x, 8 * sizeof(int)>>>(children, points, Parameters(params, true), child_active_nodes);
