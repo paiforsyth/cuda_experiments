@@ -285,7 +285,7 @@ int main(int argc, char **argv){
     cudaDeviceSynchronize();
     std::cout << "copying host active nodes to device active nodes " << std::endl;
     cudaDeviceSynchronize();
-    cudaMemcpy(device_active_nodes, &host_active_nodes, sizeof(bool)*max_nodes, cudaMemcpyHostToDevice);
+    cudaMemcpy(device_active_nodes, &host_active_nodes[0], sizeof(bool)*max_nodes, cudaMemcpyHostToDevice);
     
     //set reucsion limit for cuda dynamic parallelism to max_depth
     cudaDeviceSetLimit(cudaLimitDevRuntimeSyncDepth,max_depth);
