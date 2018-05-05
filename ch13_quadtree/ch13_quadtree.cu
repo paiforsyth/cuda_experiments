@@ -271,6 +271,7 @@ int main(int argc, char **argv){
     Parameters params(max_depth, min_points_per_node);
     const int NUM_THREADS_PER_BLOCK=32;
     const size_t smem_size=8*sizeof(int);
+    printf("launching kernel");
     build_quad_tree_kernel<<<1, NUM_THREADS_PER_BLOCK,smem_size>>>(nodes, points, params, device_active_nodes);
 	gpuErrchk(cudaPeekAtLastError());
 
