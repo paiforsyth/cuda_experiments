@@ -141,7 +141,7 @@ __global__ void build_quad_tree_kernel(QuadTreeNode* nodes, Points* points, Para
     cudaDeviceSynchronize();
     if(threadIdx.x==0){
        // printf("yo");
-        printf("The current depth is %d.  The currently active node is %d.  The node is responsible for points in the range %d to %d \n",  params.depth, blockIdx.x, node.points_begin(), node.points_end()  );
+        printf("Depth: %d.  (depth-specific) node num: %d.  Point range: %d to %d. bbox : min= (%d,%d) max=(%d,%d).    \n",  params.depth, blockIdx.x, node.points_begin(), node.points_end(), node.bounding_box().get_min().x, node.bounding_box().get_min().y, node.bounding_box().get_max().x, node.bounding_box().get_max().y    );
     }
     cudaDeviceSynchronize();
 
