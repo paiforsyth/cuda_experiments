@@ -1,9 +1,10 @@
 #pragma once
 class Points{
+    
+    public:
     float* m_x;
     float* m_y;
 
-    public:
     __host__ __device__ Points();
     
     __host__ __device__ Points(float* x, float* y);

@@ -1,6 +1,6 @@
 #include "bounding_box.cuh"
 __host__ __device__ BoundingBox::BoundingBox(){
-    m_p_min = make_float2(0.0f, 0.0f);
+    m_p_min = make_float2(-1.0f, -1.0f);
     m_p_max = make_float2(1.0f, 1.0f);
 }
 
