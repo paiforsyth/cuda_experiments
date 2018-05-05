@@ -2,10 +2,10 @@
 #include "bounding_box.cuh"
 #include "points.cuh"
 class QuadTreeNode {
+    public:
     int m_id; //identifier of the node
     int m_begin, m_end; //range of points for the node
     BoundingBox m_bounding_box;
-    public:
     __host__ __device__ QuadTreeNode();
 
     __host__ __device__ int id() const;

@@ -131,12 +131,16 @@ __device__ void prepare_children(QuadTreeNode* children, QuadTreeNode& node, con
 
 __global__ void build_quad_tree_kernel(QuadTreeNode* nodes, Points* points, Parameters params,bool* active_nodes  ){
     __shared__ int smem[8];
-    printf("Hello from block %d, thread %d\n.  The current depth is %d and the number of nodes at this depth is %d ", blockIdx.x, threadIdx.x, params.depth, params.num_nodes_at_this_level );
-    cudaDeviceSynchronize();
+    //idea: have only thread 0 display the point
+    
     //the current node
-    QuadTreeNode& node = nodes[blockIdx.x];
+    QuadTreeNode& node = nodes[blockIdx.x]; 
     node.set_id(node.id() + blockIdx.x);
     int num_points = node.num_points();
+
+    if(threadIdx.x==0)
+        printf("The current depth is %d.  The currently active node is %d.  The node is responsible for points in the range %d to %d",  params.depth, blockIdx.x, node.points_begin(), node.points_end()  );
+    cudaDeviceSynchronize();
 
     //check exit condition, moving points to first buffer as needed
     bool exit = check_num_points_and_depth(node, points, num_points, params);
